@@ -25,9 +25,6 @@ The project follows the standard Laravel structure with Models, Controllers, and
 ### Option 1: Standard PHP Setup
 
 ```bash
-git clone git@github.com:krzysztofhaczela/php-task.git
-cd php-task
-
 composer install
 
 cp .env.example .env
