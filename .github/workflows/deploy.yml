@@ -27,10 +27,10 @@ jobs:
         uses: paulhatch/semantic-version@v5.4.0
         with:
           tag_prefix: "v"
-          major_pattern: "(MAJOR)"
-          minor_pattern: "(MINOR)"
+          major_pattern: "BREAKING CHANGE:|feat!:|fix!:"
+          minor_pattern: "feat:"
           version_format: "${major}.${minor}.${patch}"
-          bump_each_commit: false
+          bump_each_commit: true
           search_commit_body: true
 
       - name: Create and push tag
