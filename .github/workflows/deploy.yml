@@ -22,33 +22,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Semantic Version
+      - name: Bump version and push tag
         id: semver
-        uses: paulhatch/semantic-version@v5.4.0
-        with:
-          tag_prefix: "v"
-          major_pattern: "BREAKING CHANGE:|feat!:|fix!:"
-          minor_pattern: "feat:"
-          version_format: "${major}.${minor}.${patch}"
-          bump_each_commit: true
-          search_commit_body: true
-
-      - name: Create and push tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          TAG_NAME="v${{ steps.semver.outputs.version }}"
-          CURRENT_COMMIT=$(git rev-parse HEAD)
-
-          # Check if this exact version tag already exists on this commit
-          if git tag --points-at HEAD | grep -q "^${TAG_NAME}$"; then
-            echo "Tag $TAG_NAME already exists on current commit, skipping"
-          else
-            echo "Creating tag $TAG_NAME"
-            git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
-            git push origin "$TAG_NAME"
-          fi
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: main
+          MAJOR_STRING_TOKEN: "BREAKING CHANGE:"
+          MINOR_STRING_TOKEN: "feat:"
+          PATCH_STRING_TOKEN: "fix:"
 
       # This code need actual AWS credentials and EKS to work, so it's commented out for now.
 
