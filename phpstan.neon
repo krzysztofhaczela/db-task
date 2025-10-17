@@ -1,0 +1,10 @@
+parameters:
+    paths:
+        - app
+        - config
+        - database
+        - routes
+    level: 5
+    excludePaths:
+        - vendor
+        - routes/console.php
