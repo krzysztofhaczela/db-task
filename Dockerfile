@@ -22,8 +22,13 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 RUN mkdir -p /var/log/supervisor
 
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
+# Create database directory and file with proper permissions
+RUN mkdir -p /var/www/html/database && \
+    touch /var/www/html/database/database.sqlite && \
+    chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod 664 /var/www/html/database/database.sqlite && \
+    chmod 775 /var/www/html/database
 
 # for testing purposes; in production, use real env vars
 COPY .env.example .env
@@ -33,4 +38,4 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 8080
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/var/www/html/start.sh"]
