@@ -1,0 +1,15 @@
+.git
+.github
+.env
+node_modules
+vendor
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose*
+phpunit.xml
+README.md
