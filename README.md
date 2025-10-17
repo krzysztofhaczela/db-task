@@ -46,3 +46,6 @@ docker build -t laravel-task .
 docker run -p 8080:8080 laravel-task
 ```
 The application will be available at http://localhost:8080/
+
+
+
